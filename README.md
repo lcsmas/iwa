@@ -1,8 +1,8 @@
-# Projet IWA 5ème année
+# Projet IWA 5ème année
 
 Le projet est une application client/serveur avec un front JS et un back Java Spring Boot
 
-## Lancement de la base de donnée Postgres
+# Lancement de la base de donnée Postgres
 
 ```bash
 cd docker
