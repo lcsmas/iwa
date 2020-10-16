@@ -9,8 +9,8 @@ cd docker
 docker-compose up
 ```
 
-### MDP
-```
+
+**Mot de passe**```
 iwa
 ```
 
