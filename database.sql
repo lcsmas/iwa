@@ -2,12 +2,13 @@
 #        Script MySQL.
 #------------------------------------------------------------
 
+CREATE DATABASE iwa;
 
 #------------------------------------------------------------
 # Table: User
 #------------------------------------------------------------
 
-CREATE TABLE User(
+CREATE TABLE iwa.User(
         id_user  Int  Auto_increment  NOT NULL ,
         mail     Varchar (50) NOT NULL ,
         password Varchar (50) NOT NULL
@@ -19,7 +20,7 @@ CREATE TABLE User(
 # Table: State
 #------------------------------------------------------------
 
-CREATE TABLE State(
+CREATE TABLE iwa.State(
         id_state    Int  Auto_increment  NOT NULL ,
         label_state Varchar (50) NOT NULL
 	,CONSTRAINT State_PK PRIMARY KEY (id_state)
@@ -30,7 +31,7 @@ CREATE TABLE State(
 # Table: Location
 #------------------------------------------------------------
 
-CREATE TABLE Location(
+CREATE TABLE iwa.Location(
         id_location Int  Auto_increment  NOT NULL ,
         longitute   Int NOT NULL ,
         latitude    Int NOT NULL
@@ -42,7 +43,7 @@ CREATE TABLE Location(
 # Table: Notification
 #------------------------------------------------------------
 
-CREATE TABLE Notification(
+CREATE TABLE iwa.Notification(
         id_notification    Int  Auto_increment  NOT NULL ,
         date_notification  TimeStamp NOT NULL ,
         label_notification Varchar (50) NOT NULL ,
@@ -61,7 +62,7 @@ CREATE TABLE Notification(
 # Table: user_state
 #------------------------------------------------------------
 
-CREATE TABLE user_state(
+CREATE TABLE iwa.user_state(
         id_state Int NOT NULL ,
         id_user  Int NOT NULL ,
         date     TimeStamp NOT NULL
@@ -76,7 +77,7 @@ CREATE TABLE user_state(
 # Table: user_localized
 #------------------------------------------------------------
 
-CREATE TABLE user_localized(
+CREATE TABLE iwa.user_localized(
         id_location Int NOT NULL ,
         id_user     Int NOT NULL ,
         date        TimeStamp NOT NULL
