@@ -1,8 +1,5 @@
-#------------------------------------------------------------
-#        Script MySQL.
-#------------------------------------------------------------
 
-CREATE DATABASE iwa;
+--CREATE DATABASE iwa;
 
 ------------------------------------------------------------
 --        Script Postgre 
@@ -13,7 +10,7 @@ CREATE DATABASE iwa;
 ------------------------------------------------------------
 -- Table: User
 ------------------------------------------------------------
-CREATE TABLE iwa.User(
+CREATE TABLE "User"(
 	id_user    SERIAL NOT NULL ,
 	mail       VARCHAR (50) NOT NULL ,
 	password   VARCHAR (50) NOT NULL  ,
@@ -24,7 +21,7 @@ CREATE TABLE iwa.User(
 ------------------------------------------------------------
 -- Table: State
 ------------------------------------------------------------
-CREATE TABLE iwa.State(
+CREATE TABLE "State"(
 	id_state      SERIAL NOT NULL ,
 	label_state   VARCHAR (50) NOT NULL  ,
 	CONSTRAINT State_PK PRIMARY KEY (id_state)
@@ -34,7 +31,7 @@ CREATE TABLE iwa.State(
 ------------------------------------------------------------
 -- Table: Location
 ------------------------------------------------------------
-CREATE TABLE iwa.Location(
+CREATE TABLE "Location"(
 	id_location   SERIAL NOT NULL ,
 	longitute     INT  NOT NULL ,
 	latitude      INT  NOT NULL  ,
@@ -45,7 +42,7 @@ CREATE TABLE iwa.Location(
 ------------------------------------------------------------
 -- Table: Notification
 ------------------------------------------------------------
-CREATE TABLE iwa.Notification(
+CREATE TABLE "Notification"(
 	id_notification      SERIAL NOT NULL ,
 	date_notification    TIMESTAMP  NOT NULL ,
 	label_notification   VARCHAR (50) NOT NULL ,
@@ -54,37 +51,37 @@ CREATE TABLE iwa.Notification(
 	id_state             INT  NOT NULL  ,
 	CONSTRAINT Notification_PK PRIMARY KEY (id_notification)
 
-	,CONSTRAINT Notification_Location_FK FOREIGN KEY (id_location) REFERENCES iwa.Location(id_location)
-	,CONSTRAINT Notification_User0_FK FOREIGN KEY (id_user) REFERENCES iwa.User(id_user)
-	,CONSTRAINT Notification_State1_FK FOREIGN KEY (id_state) REFERENCES iwa.State(id_state)
+	,CONSTRAINT Notification_Location_FK FOREIGN KEY (id_location) REFERENCES "Location"(id_location)
+	,CONSTRAINT Notification_User0_FK FOREIGN KEY (id_user) REFERENCES "User"(id_user)
+	,CONSTRAINT Notification_State1_FK FOREIGN KEY (id_state) REFERENCES "State"(id_state)
 )WITHOUT OIDS;
 
 
 ------------------------------------------------------------
 -- Table: user_state
 ------------------------------------------------------------
-CREATE TABLE iwa.user_state(
+CREATE TABLE "user_state"(
 	id_state   INT  NOT NULL ,
 	id_user    INT  NOT NULL ,
 	date       TIMESTAMP  NOT NULL  ,
 	CONSTRAINT user_state_PK PRIMARY KEY (id_state,id_user)
 
-	,CONSTRAINT user_state_State_FK FOREIGN KEY (id_state) REFERENCES iwa.State(id_state)
-	,CONSTRAINT user_state_User0_FK FOREIGN KEY (id_user) REFERENCES iwa.User(id_user)
+	,CONSTRAINT user_state_State_FK FOREIGN KEY (id_state) REFERENCES "State"(id_state)
+	,CONSTRAINT user_state_User0_FK FOREIGN KEY (id_user) REFERENCES "User"(id_user)
 )WITHOUT OIDS;
 
 
 ------------------------------------------------------------
 -- Table: user_localized
 ------------------------------------------------------------
-CREATE TABLE iwa.user_localized(
+CREATE TABLE "user_localized"(
 	id_location   INT  NOT NULL ,
 	id_user       INT  NOT NULL ,
 	date          TIMESTAMP  NOT NULL  ,
 	CONSTRAINT user_localized_PK PRIMARY KEY (id_location,id_user)
 
-	,CONSTRAINT user_localized_Location_FK FOREIGN KEY (id_location) REFERENCES iwa.Location(id_location)
-	,CONSTRAINT user_localized_User0_FK FOREIGN KEY (id_user) REFERENCES iwa.User(id_user)
+	,CONSTRAINT user_localized_Location_FK FOREIGN KEY (id_location) REFERENCES "Location"(id_location)
+	,CONSTRAINT user_localized_User0_FK FOREIGN KEY (id_user) REFERENCES "User"(id_user)
 )WITHOUT OIDS;
 
 
