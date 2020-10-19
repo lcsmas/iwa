@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("api/v1/users")
 @RestController
@@ -21,8 +22,8 @@ public class UsersController {
 
     @GetMapping
     @RequestMapping ("{id}")
-    public User get(@PathVariable Integer id) {
-        return userRepository.getOne(id);
+    public Optional<User> get(@PathVariable Integer id) {
+        return userRepository.findById(id);
     }
 
     @PostMapping

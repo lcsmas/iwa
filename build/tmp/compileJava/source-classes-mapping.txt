@@ -1,14 +1,14 @@
 com/ig5/iwa/IwaApplication.java
  com.ig5.iwa.IwaApplication
-com/ig5/iwa/models/Location.java
- com.ig5.iwa.models.Location
+com/ig5/iwa/repositories/LocationRepository.java
+ com.ig5.iwa.repositories.LocationRepository
 com/ig5/iwa/controllers/LocationsController.java
  com.ig5.iwa.controllers.LocationsController
 com/ig5/iwa/repositories/UserRepository.java
  com.ig5.iwa.repositories.UserRepository
-com/ig5/iwa/repositories/LocationRepository.java
- com.ig5.iwa.repositories.LocationRepository
-com/ig5/iwa/controllers/UsersController.java
- com.ig5.iwa.controllers.UsersController
+com/ig5/iwa/models/Location.java
+ com.ig5.iwa.models.Location
 com/ig5/iwa/models/User.java
  com.ig5.iwa.models.User
+com/ig5/iwa/controllers/UsersController.java
+ com.ig5.iwa.controllers.UsersController
