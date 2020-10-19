@@ -1,0 +1,2 @@
+com/ig5/iwa/IwaApplicationTests.java
+ com.ig5.iwa.IwaApplicationTests
