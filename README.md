@@ -16,5 +16,5 @@ Utilisateur et base : postgres
 Mot de passe : iwa
 ```
 
-La BD est accessible sur le port 5432.
+La BD est accessible sur 0.0.0.0:5432.
 
