@@ -13,6 +13,8 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_Location;
+    float longitude;
+    float latitude;
 
     @ManyToMany(mappedBy = "locations" )
     @JsonIgnore // Pour ne pas produire des cycles
@@ -26,11 +28,23 @@ public class Location {
         this.users = users;
     }
 
-    public void setId_Location(Integer id_location) {
-        this.id_Location = id_location;
+    public void setId_Location(Integer id_location) { this.id_Location = id_location; }
+
+    public Integer getId_Location() { return id_Location; }
+
+    public float getLongitude() {
+        return longitude;
     }
 
-    public Integer getId_Location() {
-        return id_Location;
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
     }
 }

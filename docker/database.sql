@@ -32,8 +32,8 @@ CREATE TABLE state
 ------------------------------------------------------------
 CREATE TABLE location(
 	id_location   SERIAL NOT NULL ,
-	longitute     INT  NOT NULL ,
-	latitude      INT  NOT NULL  ,
+	longitude     FLOAT  NOT NULL ,
+	latitude      FLOAT  NOT NULL  ,
 	CONSTRAINT location_PK PRIMARY KEY (id_location)
 )WITHOUT OIDS;
 
