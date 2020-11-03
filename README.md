@@ -2,7 +2,7 @@
 
 Cette application est un clone de StopCovid, nous la développons à des fins éducatives, dans le cadre d'un projet de 5ème année (Promo IG Polytech Montpellier).
 ```
-Front-end : React (https://github.com/AmjadIG/iwa-front)
+Front-end : React [Here](https://github.com/AmjadIG/iwa-front)
 API REST : Java Spring Boot
 BD : PostgreSQL
 Authentification : Keycloak
