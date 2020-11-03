@@ -1,6 +1,12 @@
 # Projet IWA 5ème année
 
-Le projet est une application client/serveur avec un front JS et un back Java Spring Boot
+Le projet est une application client/serveur
+```
+Front-end: React
+API REST : Java Spring Boot
+BD : Postgre
+Authentification : Keycloak
+```
 
 # Usage
 
