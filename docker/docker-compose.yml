@@ -5,4 +5,18 @@ services:
     build: .
     ports: 
       - 5432:5432
-    
+  keycloak:
+    container_name: iwa_keycloak
+    image: jboss/keycloak
+    ports:
+      - 8081:8080
+    depends_on:
+      - db
+    environment:
+      - DB_ADDR=iwa_db
+      - DB_VENDOR=postgres
+      - DB_DATABASE=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=iwa
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=iwa
