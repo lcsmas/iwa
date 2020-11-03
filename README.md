@@ -1,10 +1,10 @@
-# Projet IWA 5ème année
+# Projet IWA 5ème année IG
 
-Le projet est une application client/serveur
+Cette application est un clone de StopCovid, nous la développons à des fins éducatives, dans le cadre d'un projet de 5ème année (Promo IG Polytech Montpellier).
 ```
 Front-end: React
 API REST : Java Spring Boot
-BD : Postgre
+BD : PostgreSQL
 Authentification : Keycloak
 ```
 
