@@ -1,20 +1,32 @@
-# Projet IWA 5ème année
+# Back-end projet IWA
+[Front-end](https://github.com/AmjadIG/iwa-front)
 
-Le projet est une application client/serveur avec un front JS et un back Java Spring Boot
+Cette application est un clone de StopCovid, nous la développons à des fins éducatives, dans le cadre d'un projet de 5ème année (Promo IG Polytech Montpellier).
 
-# Lancement de la base de donnée Postgres
+```
+Front-end : React
+API REST : Java Spring Boot
+BD : PostgreSQL
+Authentification : Keycloak
+```
+
+# Usage
 
 ```bash
 cd docker
 docker-compose up
 ```
+Lors d'une modification, pas besoin de relancer docker, gradle est configurée en auto-reload.
 
+# Keycloak
+```
+http://localhost:8081/
+```
 
 **Informations de connexion**
 ```
-Utilisateur et base : postgres
+Utilisateur : admin
 Mot de passe : iwa
 ```
 
-La BD est accessible sur 0.0.0.0:5432.
 
