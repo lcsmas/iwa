@@ -29,4 +29,15 @@ Utilisateur : admin
 Mot de passe : iwa
 ```
 
+# Postgres
+```
+http://localhost:5432/
+```
+
+**Informations de connexion**
+```
+Utilisateur : postgres
+Mot de passe : iwa
+```
+
 
