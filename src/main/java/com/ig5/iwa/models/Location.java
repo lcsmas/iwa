@@ -1,6 +1,7 @@
 package com.ig5.iwa.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,7 +17,15 @@ public class Location {
     float longitude;
     float latitude;
 
-    @ManyToMany(mappedBy = "locations" )
+    public Location(float longitude, float latitude){
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    @ManyToMany
+    @JoinTable(name="user_localized",
+            joinColumns = @JoinColumn(name="id_location"),
+            inverseJoinColumns = @JoinColumn(name="id_user"))
     @JsonIgnore // Pour ne pas produire des cycles
     private List<User > users;
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.GeneratedValue;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +29,8 @@ public class LocationsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Location create(@RequestBody final Location location) {
-        return locationRepository.saveAndFlush(location);
+    public Location create(@RequestBody float longitude, float latitude) {
+        Location sendNewLoc = new Location(longitude,latitude);
+        return locationRepository.saveAndFlush(sendNewLoc);
     }
-
 }
