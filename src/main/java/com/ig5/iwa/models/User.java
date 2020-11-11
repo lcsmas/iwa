@@ -1,5 +1,7 @@
 package com.ig5.iwa.models;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,12 +20,14 @@ public class User {
     @JoinTable(name="user_localized",
             joinColumns = @JoinColumn(name="id_user"),
             inverseJoinColumns = @JoinColumn(name="id_location"))
+    @JsonManagedReference
     private List<Location> locations;
 
     @ManyToMany
     @JoinTable(name="user_state",
             joinColumns = @JoinColumn(name="id_user"),
             inverseJoinColumns = @JoinColumn(name="id_state"))
+    @JsonManagedReference
     private List<State> states;
 
     public List<State> getStates() { return states; }

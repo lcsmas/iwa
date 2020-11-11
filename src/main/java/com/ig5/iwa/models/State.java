@@ -1,5 +1,7 @@
 package com.ig5.iwa.models;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class State {
     @JoinTable(name="user_state",
             joinColumns = @JoinColumn(name="id_state"),
             inverseJoinColumns = @JoinColumn(name="id_user"))
+    @JsonBackReference
     private List<User> users;
 
     public Integer getId_state() {
