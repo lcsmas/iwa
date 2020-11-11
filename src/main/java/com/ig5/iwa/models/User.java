@@ -18,7 +18,17 @@ public class User {
     @JoinTable(name="user_localized",
             joinColumns = @JoinColumn(name="id_user"),
             inverseJoinColumns = @JoinColumn(name="id_location"))
-    private List<Location > locations;
+    private List<Location> locations;
+
+    @ManyToMany
+    @JoinTable(name="user_state",
+            joinColumns = @JoinColumn(name="id_user"),
+            inverseJoinColumns = @JoinColumn(name="id_state"))
+    private List<State> states;
+
+    public List<State> getStates() { return states; }
+
+    public void setStates(List<State> states) { this.states = states; }
 
     public List<Location> getLocations() {
         return locations;
@@ -47,6 +57,7 @@ public class User {
     public void setId_user(Integer id) {
         this.id_user = id;
     }
+
     public Integer getId_user() {
         return id_user;
     }

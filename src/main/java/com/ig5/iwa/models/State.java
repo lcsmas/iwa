@@ -19,12 +19,6 @@ public class State {
             inverseJoinColumns = @JoinColumn(name="id_user"))
     private List<User> users;
 
-    @ManyToOne
-    @JoinTable(name="have2",
-            joinColumns = @JoinColumn(name="id_state"),
-            inverseJoinColumns = @JoinColumn(name="id_notification"))
-    private Notification notification;
-
     public Integer getId_state() {
         return id_state;
     }
@@ -49,11 +43,4 @@ public class State {
         this.users = users;
     }
 
-    public Notification getNotification() {
-        return notification;
-    }
-
-    public void setNotification(Notification notification) {
-        this.notification = notification;
-    }
 }

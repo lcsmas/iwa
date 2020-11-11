@@ -16,12 +16,6 @@ public class Notification {
     private Timestamp date_notification;
 
     @OneToMany
-    @JoinTable(name="have2",
-            joinColumns = @JoinColumn(name="id_notification"),
-            inverseJoinColumns = @JoinColumn(name="id_state"))
-    private List<State> states;
-
-    @OneToMany
     @JoinTable(name="concerned",
             joinColumns = @JoinColumn(name="id_notification"),
             inverseJoinColumns = @JoinColumn(name="id_location"))
@@ -41,14 +35,6 @@ public class Notification {
 
     public void setLabel_notification(String label_notification) {
         this.label_notification = label_notification;
-    }
-
-    public List<State> getStates() {
-        return states;
-    }
-
-    public void setStates(List<State> states) {
-        this.states = states;
     }
 
     public List<Location> getLocations() {
