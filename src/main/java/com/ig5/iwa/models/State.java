@@ -3,11 +3,14 @@ package com.ig5.iwa.models;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity(name="state")
 @Table(name = "state", schema = "public")
 @Access(AccessType.FIELD)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id_state")
 public class State {
 
     @Id
@@ -15,12 +18,8 @@ public class State {
     private Integer id_state;
     private String label_state;
 
-    @ManyToMany
-    @JoinTable(name="user_state",
-            joinColumns = @JoinColumn(name="id_state"),
-            inverseJoinColumns = @JoinColumn(name="id_user"))
-    @JsonBackReference
-    private List<User> users;
+    @OneToMany(mappedBy = "state")
+    private Set<User_State> users;
 
     public Integer getId_state() {
         return id_state;
@@ -38,12 +37,11 @@ public class State {
         this.label_state = label_state;
     }
 
-    public List<User> getUsers() {
+    public Set<User_State> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User_State> users) {
         this.users = users;
     }
-
 }

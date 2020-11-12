@@ -16,7 +16,7 @@ public class StatesController {
     private StateRepository stateRepository;
 
     @GetMapping
-    public List<State> list() {  return stateRepository.findAll(); }
+    public List<State> list() {  return stateRepository.findAll();}
 
     @GetMapping
     @RequestMapping ("{id}")

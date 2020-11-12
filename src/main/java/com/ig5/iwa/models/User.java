@@ -3,11 +3,14 @@ package com.ig5.iwa.models;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity(name="user")
 @Table(name = "user", schema = "public")
 @Access(AccessType.FIELD)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id_user")
 public class User {
 
     @Id
@@ -16,31 +19,16 @@ public class User {
     private String mail;
     private String password;
 
-    @ManyToMany
-    @JoinTable(name="user_localized",
-            joinColumns = @JoinColumn(name="id_user"),
-            inverseJoinColumns = @JoinColumn(name="id_location"))
-    @JsonManagedReference
-    private List<Location> locations;
 
-    @ManyToMany
-    @JoinTable(name="user_state",
-            joinColumns = @JoinColumn(name="id_user"),
-            inverseJoinColumns = @JoinColumn(name="id_state"))
-    @JsonManagedReference
-    private List<State> states;
+    @OneToMany(mappedBy = "user")
+    private Set<User_State> states;
 
-    public List<State> getStates() { return states; }
+    @OneToMany(mappedBy = "user")
+    private Set<User_Localized> locations;
 
-    public void setStates(List<State> states) { this.states = states; }
+    public Set<User_State> getStates() { return states; }
 
-    public List<Location> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
-    }
+    public void setStates(Set<User_State> states) { this.states = states; }
 
     public String getPassword() {
         return password;
