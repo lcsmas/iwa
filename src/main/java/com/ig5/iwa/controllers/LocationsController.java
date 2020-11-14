@@ -32,7 +32,6 @@ public class LocationsController {
         return locationRepository.findById(id);
     }
 
-    /*
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Location create(@RequestBody float longitude, float latitude, User_Localized currentUser) {
@@ -45,7 +44,5 @@ public class LocationsController {
                 +"\n-users_localized:"+sendNewLoc.getUsers());
         return locationRepository.saveAndFlush(sendNewLoc);
     }
-
-     */
 
 }

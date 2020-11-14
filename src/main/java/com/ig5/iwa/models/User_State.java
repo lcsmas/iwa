@@ -2,9 +2,11 @@ package com.ig5.iwa.models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Optional;
 
 @Entity
 public class User_State {
+
 
     @EmbeddedId
     UserStateKey id;
@@ -20,6 +22,13 @@ public class User_State {
     State state;
 
     Date date;
+
+    public User_State(){}
+
+    public User_State(User user, State state) {
+        this.user = user;
+        this.state = state;
+    }
 
     public UserStateKey getId() {
         return id;

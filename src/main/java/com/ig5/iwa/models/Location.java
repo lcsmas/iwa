@@ -17,6 +17,13 @@ public class Location {
     @OneToMany(mappedBy = "location")
     private Set<User_Localized> users;
 
+    public Location() {}
+
+    public Location(float longitude, float latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public Set<User_Localized> getUsers() {
         return users;
     }
