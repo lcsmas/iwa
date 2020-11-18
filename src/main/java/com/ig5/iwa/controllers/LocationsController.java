@@ -17,7 +17,7 @@ import java.util.Set;
 @RestController
 public class LocationsController {
     @Autowired
-    private LocationRepository locationRepository;
+    public LocationRepository locationRepository;
 
     @GetMapping
     public List<Location> list() {
