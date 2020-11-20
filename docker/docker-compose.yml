@@ -22,18 +22,18 @@ services:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=iwa
 
-  rest_api:
-    container_name: iwa_rest_api
-    image: openjdk
-    volumes:
-      - ..:/usr/src/api/
-    working_dir: /usr/src/api/
-    command: ./gradlew bootRun
-    ports:
-      - 8080:8080
-    depends_on:
-      - db
-      - keycloak
+ # rest_api:
+  #  container_name: iwa_rest_api
+  #  image: openjdk
+  #  volumes:
+ #     - ..:/usr/src/api/
+ #   working_dir: /usr/src/api/
+ #   command: ./gradlew bootRun
+ #   ports:
+ #     - 8080:8080
+ #  depends_on:
+ #     - db
+  #    - keycloak
 
   zookeeper:
     container_name: iwa_zookeeper

@@ -27,13 +27,17 @@ public class User {
         this.password = password;
     }
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<User_State> states;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<User_Localized> locations;
 
     public Set<User_State> getStates() { return states; }
+
+    public void addUserState(User_State us){
+        states.add(us);
+    }
 
     public void setStates(Set<User_State> states) { this.states = states; }
 
