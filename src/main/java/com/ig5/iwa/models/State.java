@@ -26,6 +26,11 @@ public class State {
         this.id_state = Math.abs(UUID.randomUUID().hashCode());
     }
 
+    public State(int id, String label_state) {
+        this.id_state = id;
+        this.label_state = label_state;
+    }
+
     @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
     private Set<User_State> users;
 

@@ -15,6 +15,12 @@ public class Notification {
     private String label_notification;
     private Timestamp date_notification;
 
+    public Notification(Integer id_notification, String label_notification, Timestamp date_notification) {
+        this.id_notification = id_notification;
+        this.label_notification = label_notification;
+        this.date_notification = date_notification;
+    }
+
     @OneToMany
     @JoinTable(name="concerned",
             joinColumns = @JoinColumn(name="id_notification"),
