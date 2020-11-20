@@ -7,6 +7,7 @@ import com.ig5.iwa.repositories.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.GeneratedValue;
 import java.util.List;
@@ -28,8 +29,11 @@ public class LocationsController {
     @GetMapping
     @RequestMapping ("{id}")
     public Optional<Location> get(@PathVariable Integer id) {
-        System.out.println("Get Location "+id);
-        return locationRepository.findById(id);
+        if(locationRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_location "+id+" not found");
+        }else{
+            return locationRepository.findById(id);
+        }
     }
 
     @PostMapping

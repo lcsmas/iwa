@@ -24,6 +24,11 @@ public class State {
         this.label_state = label_state;
     }
 
+    public State(int id, String label_state) {
+        this.id_state = id;
+        this.label_state = label_state;
+    }
+
     @OneToMany(mappedBy = "state")
     private Set<User_State> users;
 
