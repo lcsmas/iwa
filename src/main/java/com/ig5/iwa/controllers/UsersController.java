@@ -28,7 +28,11 @@ public class UsersController {
     @GetMapping
     @RequestMapping ("{id}")
     public Optional<User> get(@PathVariable Integer id) {
-        return userRepository.findById(id);
+        if(userRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_user "+id+" not found");
+        }else {
+            return userRepository.findById(id);
+        }
     }
 
     @GetMapping
@@ -69,4 +73,26 @@ public class UsersController {
         BeanUtils.copyProperties(user,existingUser,"id_user");
         return userRepository.saveAndFlush(existingUser);
     }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public void delete (@PathVariable int id){
+        //verifier existence
+        if(userRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error : id_user " + id + " was not found");
+        }else{
+            userRepository.deleteById(id);
+        }
+    }
+
+    @PutMapping
+    public User update(@PathVariable int id_user, @RequestBody User userUpdated){
+        if (userRepository.findById(id_user).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Error : id_user " + id_user + " was not found");
+        }else{
+            User userPersisted = userRepository.getOne(id_user);
+            BeanUtils.copyProperties(userUpdated,userPersisted,"id_user");
+            return userRepository.saveAndFlush(userPersisted);
+        }
+    }
+
 }
