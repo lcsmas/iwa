@@ -24,6 +24,12 @@ public class Location {
         this.latitude = latitude;
     }
 
+    public Location(int id, float longitude, float latitude) {
+        this.id_location = id;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public Set<User_Localized> getUsers() {
         return users;
     }

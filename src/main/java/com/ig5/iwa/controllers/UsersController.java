@@ -6,9 +6,11 @@ import com.ig5.iwa.models.UserStateKey;
 import com.ig5.iwa.models.User_State;
 import com.ig5.iwa.repositories.UserRepository;
 import com.ig5.iwa.repositories.UserStateRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +31,11 @@ public class UsersController {
     @GetMapping
     @RequestMapping ("{id}")
     public Optional<User> get(@PathVariable Integer id) {
-        return userRepository.findById(id);
+        if(userRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_user "+id+" not found");
+        }else {
+            return userRepository.findById(id);
+        }
     }
 
     @PostMapping
@@ -51,4 +57,26 @@ public class UsersController {
             );
         }
     }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public void delete (@PathVariable int id){
+        //verifier existence
+        if(userRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error : id_user " + id + " was not found");
+        }else{
+            userRepository.deleteById(id);
+        }
+    }
+
+    @PutMapping
+    public User update(@PathVariable int id_user, @RequestBody User userUpdated){
+        if (userRepository.findById(id_user).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Error : id_user " + id_user + " was not found");
+        }else{
+            User userPersisted = userRepository.getOne(id_user);
+            BeanUtils.copyProperties(userUpdated,userPersisted,"id_user");
+            return userRepository.saveAndFlush(userPersisted);
+        }
+    }
+
 }
