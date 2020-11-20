@@ -2,17 +2,16 @@ package com.ig5.iwa.controllers;
 
 import com.ig5.iwa.models.State;
 import com.ig5.iwa.models.User;
-import com.ig5.iwa.models.UserStateKey;
 import com.ig5.iwa.models.User_State;
 import com.ig5.iwa.repositories.UserRepository;
-import com.ig5.iwa.repositories.UserStateRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequestMapping("api/v1/users")
 @RestController
@@ -32,6 +31,15 @@ public class UsersController {
         return userRepository.findById(id);
     }
 
+    @GetMapping
+    @RequestMapping("mail/{mail}")
+    public Boolean get(@PathVariable String mail) {
+        if(userRepository.findByMail(mail).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"the mail "+ mail +" was not found");
+        }
+        return userRepository.findByMail(mail).isPresent();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User create(@RequestBody final User user) {
@@ -40,15 +48,25 @@ public class UsersController {
 
     @PostMapping("{id_user}/{state_label}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addUserState(@RequestBody int id_user, String state_label) {
+    public User addUserState(@PathVariable int id_user, @PathVariable String state_label) {
         if(userRepository.findById(id_user).isPresent()){
             User u = userRepository.findById(id_user).orElse(new User());
-            u.setStates(u.getStates().stream()
-                    .map(user_state -> {
-                        User_State us = new User_State(u,new State(state_label));
-                        return us;
-                    }).collect(Collectors.toSet())
-            );
+            State state = new State(state_label);
+            User_State us = new User_State(u,state);
+            u.addUserState(us);
+            // TODO : trouver une solution pour ajouter un state...
+            // TODO : Unable to find com.ig5.iwa.models.User_State with id com.ig5.iwa.models.UserStateKey@5f901b30
+            return userRepository.saveAndFlush(u);
         }
+        return null;
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public User update(@PathVariable Integer id, @RequestBody User user){
+        // TODO: Ajouter ici une validation si tous les champs ont ete passes
+        // sinon ,retourner une erreur 400
+        User existingUser = userRepository.getOne(id);
+        BeanUtils.copyProperties(user,existingUser,"id_user");
+        return userRepository.saveAndFlush(existingUser);
     }
 }

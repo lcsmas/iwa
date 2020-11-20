@@ -18,8 +18,7 @@ public class UserStateKey implements Serializable {
         this.id_state = id_state;
     }
 
-    public UserStateKey() {
-    }
+    public UserStateKey() { }
 
     public int getId_user() {
         return id_user;
