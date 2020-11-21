@@ -13,6 +13,13 @@ public class UserStateKey implements Serializable {
     @Column(name = "id_state")
     int id_state;
 
+    public UserStateKey(int id_user, int id_state) {
+        this.id_user = id_user;
+        this.id_state = id_state;
+    }
+
+    public UserStateKey() { }
+
     public int getId_user() {
         return id_user;
     }

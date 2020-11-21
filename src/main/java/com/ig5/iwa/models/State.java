@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity(name="state")
 @Table(name = "state", schema = "public")
@@ -18,7 +19,19 @@ public class State {
     private Integer id_state;
     private String label_state;
 
-    @OneToMany(mappedBy = "state")
+    public State() { }
+
+    public State(String label_state){
+        this.label_state = label_state;
+        this.id_state = Math.abs(UUID.randomUUID().hashCode());
+    }
+
+    public State(int id, String label_state) {
+        this.id_state = id;
+        this.label_state = label_state;
+    }
+
+    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
     private Set<User_State> users;
 
     public Integer getId_state() {

@@ -7,6 +7,7 @@ import com.ig5.iwa.repositories.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.GeneratedValue;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Set;
 @RestController
 public class LocationsController {
     @Autowired
-    private LocationRepository locationRepository;
+    public LocationRepository locationRepository;
 
     @GetMapping
     public List<Location> list() {
@@ -28,11 +29,13 @@ public class LocationsController {
     @GetMapping
     @RequestMapping ("{id}")
     public Optional<Location> get(@PathVariable Integer id) {
-        System.out.println("Get Location "+id);
-        return locationRepository.findById(id);
+        if(locationRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_location "+id+" not found");
+        }else{
+            return locationRepository.findById(id);
+        }
     }
 
-    /*
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Location create(@RequestBody float longitude, float latitude, User_Localized currentUser) {
@@ -45,7 +48,5 @@ public class LocationsController {
                 +"\n-users_localized:"+sendNewLoc.getUsers());
         return locationRepository.saveAndFlush(sendNewLoc);
     }
-
-     */
 
 }

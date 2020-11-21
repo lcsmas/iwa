@@ -1,25 +1,35 @@
 package com.ig5.iwa.models;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
 public class User_State {
 
     @EmbeddedId
-    UserStateKey id;
+    private UserStateKey id = new UserStateKey();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("id_user")
     @JoinColumn(name = "id_user")
-    User user;
+    private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("id_state")
     @JoinColumn(name = "id_state")
-    State state;
+    private State state;
 
-    Date date;
+    private Date date = Date.from(Instant.now());
+
+    public User_State(){}
+
+    public User_State(User user, State state) {
+        this.user = user;
+        this.state = state;
+        this.id.setId_user(user.getId_user());
+        this.id.setId_state(state.getId_state());
+    }
 
     public UserStateKey getId() {
         return id;

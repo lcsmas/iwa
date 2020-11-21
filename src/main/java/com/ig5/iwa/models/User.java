@@ -19,14 +19,25 @@ public class User {
     private String mail;
     private String password;
 
+    public User(){}
 
-    @OneToMany(mappedBy = "user")
+    public User(Integer id_user, String mail, String password) {
+        this.id_user = id_user;
+        this.mail = mail;
+        this.password = password;
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<User_State> states;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<User_Localized> locations;
 
     public Set<User_State> getStates() { return states; }
+
+    public void addUserState(User_State us){
+        states.add(us);
+    }
 
     public void setStates(Set<User_State> states) { this.states = states; }
 

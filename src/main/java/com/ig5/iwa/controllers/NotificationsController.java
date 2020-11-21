@@ -5,6 +5,7 @@ import com.ig5.iwa.repositories.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,11 @@ public class NotificationsController {
     @GetMapping
     @RequestMapping ("{id}")
     public Optional<Notification> get(@PathVariable Integer id) {
-        return notificationRepository.findById(id);
+        if(notificationRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_notification "+id+" not found");
+        }else{
+            return notificationRepository.findById(id);
+        }
     }
 
     @PostMapping
