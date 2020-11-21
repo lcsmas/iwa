@@ -37,11 +37,11 @@ public class UsersController {
     //Todo : Faire des tests
     @GetMapping
     @RequestMapping("mail/{mail}")
-    public Boolean get(@PathVariable String mail) {
+    public Integer get(@PathVariable String mail) {
         if(userRepository.findByMail(mail).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"the mail "+ mail +" was not found");
         }
-        return userRepository.findByMail(mail).isPresent();
+        return userRepository.findByMail(mail).map(User::getId_user).orElse(null);
     }
 
     @PostMapping
