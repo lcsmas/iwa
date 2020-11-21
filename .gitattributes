@@ -1,1 +1,2 @@
 gradlew -text
+*.sh -text

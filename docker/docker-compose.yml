@@ -5,6 +5,7 @@ services:
     build: .
     ports:
       - 5432:5432
+
   keycloak:
     container_name: iwa_keycloak
     image: jboss/keycloak
@@ -24,3 +25,52 @@ services:
       - ./imports:/opt/jboss/keycloak/imports
     command:
       - "-b 0.0.0.0 -Dkeycloak.import=/opt/jboss/keycloak/imports/realm-export.json"
+
+#  rest_api:
+#    container_name: iwa_rest_api
+#    image: openjdk:11
+#    volumes:
+#      - ..:/usr/src/api/
+#    working_dir: /usr/src/api/
+#    command: ./gradlew bootRun
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - db
+#      - keycloak
+
+  #zookeeper:
+  #  container_name: iwa_zookeeper
+  #  #hostname: zoo1
+  #  image: zookeeper
+  #  ports:
+  #    - "2181:2181"
+  #    - "8085:8080"
+  #  environment:
+  #    ZOO_MY_ID: 1
+  #    ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
+
+  #kafka:
+  #  depends_on:
+  #    - zookeeper
+  #  restart: always
+  #  scale: 3
+  #  build: kafka/
+  #  ports:
+  #    - "9092"
+  #  environment:
+  #    HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+  #    KAFKA_ZOOKEEPER_CONNECT: iwa_zookeeper:2181
+  #    KAFKA_CREATE_TOPICS: "IWA:1:3"
+  #  volumes:
+  #    - /var/run/docker.sock:/var/run/docker.sock
+
+#  kafka_manager:
+#    depends_on:
+#      - zookeeper
+#      - kafka
+#    image: hlebalbau/kafka-manager:stable
+#    ports:
+#      - "9000:9000"
+#    environment:
+#      ZK_HOSTS: "iwa_zookeeper:2181"

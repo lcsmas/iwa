@@ -14,7 +14,8 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-b' +
+			'oot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	compile group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '11.0.3'

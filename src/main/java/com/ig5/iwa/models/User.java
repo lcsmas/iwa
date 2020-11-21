@@ -1,11 +1,16 @@
 package com.ig5.iwa.models;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity(name="user")
 @Table(name = "user", schema = "public")
 @Access(AccessType.FIELD)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id_user")
 public class User {
 
     @Id
@@ -14,19 +19,16 @@ public class User {
     private String mail;
     private String password;
 
-    @ManyToMany
-    @JoinTable(name="user_localized",
-            joinColumns = @JoinColumn(name="id_user"),
-            inverseJoinColumns = @JoinColumn(name="id_location"))
-    private List<Location > locations;
 
-    public List<Location> getLocations() {
-        return locations;
-    }
+    @OneToMany(mappedBy = "user")
+    private Set<User_State> states;
 
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
-    }
+    @OneToMany(mappedBy = "user")
+    private Set<User_Localized> locations;
+
+    public Set<User_State> getStates() { return states; }
+
+    public void setStates(Set<User_State> states) { this.states = states; }
 
     public String getPassword() {
         return password;
@@ -47,6 +49,7 @@ public class User {
     public void setId_user(Integer id) {
         this.id_user = id;
     }
+
     public Integer getId_user() {
         return id_user;
     }
