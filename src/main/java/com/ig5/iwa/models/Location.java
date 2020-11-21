@@ -1,7 +1,10 @@
 package com.ig5.iwa.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity(name="location")
 @Table(name = "location", schema = "public")
@@ -14,7 +17,8 @@ public class Location {
     private float longitude;
     private float latitude;
 
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<User_Localized> users;
 
     public Location() {}
@@ -22,6 +26,7 @@ public class Location {
     public Location(float longitude, float latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
+        this.id_location = Math.abs(UUID.randomUUID().hashCode());
     }
 
     public Location(int id, float longitude, float latitude) {

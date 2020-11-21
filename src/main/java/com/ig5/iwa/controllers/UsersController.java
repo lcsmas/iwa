@@ -1,12 +1,11 @@
 package com.ig5.iwa.controllers;
 
-import com.ig5.iwa.models.State;
-import com.ig5.iwa.models.User;
-import com.ig5.iwa.models.User_State;
+import com.ig5.iwa.models.*;
 import com.ig5.iwa.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -35,6 +34,7 @@ public class UsersController {
         }
     }
 
+    //Todo : Faire des tests
     @GetMapping
     @RequestMapping("mail/{mail}")
     public Boolean get(@PathVariable String mail) {
@@ -50,6 +50,19 @@ public class UsersController {
         return userRepository.saveAndFlush(user);
     }
 
+    @PostMapping(value = "addLocation/{id_user}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public User addUserLocalized(@PathVariable int id_user, @RequestBody Location data) {
+        if(userRepository.findById(id_user).isPresent()){
+            User u = userRepository.findById(id_user).orElse(new User());
+            Location location = new Location(data.getLongitude(),data.getLatitude());
+            User_Localized ul = new User_Localized(u,location);
+            u.addUserLocation(ul);
+            return userRepository.saveAndFlush(u);
+        }
+        return null;
+    }
+
     @PostMapping("{id_user}/{state_label}")
     @ResponseStatus(HttpStatus.CREATED)
     public User addUserState(@PathVariable int id_user, @PathVariable String state_label) {
@@ -58,8 +71,6 @@ public class UsersController {
             State state = new State(state_label);
             User_State us = new User_State(u,state);
             u.addUserState(us);
-            // TODO : trouver une solution pour ajouter un state...
-            // TODO : Unable to find com.ig5.iwa.models.User_State with id com.ig5.iwa.models.UserStateKey@5f901b30
             return userRepository.saveAndFlush(u);
         }
         return null;
@@ -94,5 +105,4 @@ public class UsersController {
             return userRepository.saveAndFlush(userPersisted);
         }
     }
-
 }

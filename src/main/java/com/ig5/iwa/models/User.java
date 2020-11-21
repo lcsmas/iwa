@@ -35,8 +35,12 @@ public class User {
 
     public Set<User_State> getStates() { return states; }
 
-    public void addUserState(User_State us){
-        states.add(us);
+    public void addUserState(User_State user_state){
+        states.add(user_state);
+    }
+
+    public void addUserLocation(User_Localized user_localized) {
+        locations.add(user_localized);
     }
 
     public void setStates(Set<User_State> states) { this.states = states; }
@@ -63,5 +67,13 @@ public class User {
 
     public Integer getId_user() {
         return id_user;
+    }
+
+    public Set<User_Localized> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Set<User_Localized> locations) {
+        this.locations = locations;
     }
 }
