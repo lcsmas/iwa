@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,7 @@ public class UsersController {
     //Todo : Faire des tests
     @GetMapping
     @RequestMapping("mail/{mail}")
-    public Integer get(@PathVariable String mail) {
+    public Integer getIdByMail(@PathVariable String mail) {
         if(userRepository.findByMail(mail).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"the mail "+ mail +" was not found");
         }
@@ -49,6 +50,7 @@ public class UsersController {
     public User create(@RequestBody final User user) {
         return userRepository.saveAndFlush(user);
     }
+
 
     @PostMapping(value = "addLocation/{id_user}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
@@ -94,6 +96,7 @@ public class UsersController {
             userRepository.deleteById(id);
         }
     }
+
 
     @PutMapping
     public User update(@PathVariable int id_user, @RequestBody User userUpdated){
