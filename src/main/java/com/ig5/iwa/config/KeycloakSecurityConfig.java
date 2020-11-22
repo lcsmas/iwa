@@ -36,7 +36,8 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource()).and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/users/").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/v1/users/mail/*").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
                 .anyRequest().authenticated();
     }
 
