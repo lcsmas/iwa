@@ -1,5 +1,6 @@
 package com.ig5.iwa.models;
 
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
@@ -12,12 +13,12 @@ public class User_Localized {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("id_user")
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id_user", columnDefinition = "INT")
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("id_location")
-    @JoinColumn(name = "id_location")
+    @JoinColumn(name = "id_location", columnDefinition = "INT")
     private Location location;
 
     private Date date = Date.from(Instant.now());

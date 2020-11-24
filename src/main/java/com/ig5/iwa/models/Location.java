@@ -26,7 +26,6 @@ public class Location {
     public Location(float longitude, float latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
-        this.id_location = Math.abs(UUID.randomUUID().hashCode());
     }
 
     public Location(int id, float longitude, float latitude) {

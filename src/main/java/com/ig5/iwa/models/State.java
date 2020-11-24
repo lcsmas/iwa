@@ -17,13 +17,13 @@ public class State {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_state;
+
     private String label_state;
 
     public State() { }
 
     public State(String label_state){
         this.label_state = label_state;
-        this.id_state = Math.abs(UUID.randomUUID().hashCode());
     }
 
     public State(int id, String label_state) {

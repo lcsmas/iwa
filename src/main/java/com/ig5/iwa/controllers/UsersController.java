@@ -52,32 +52,6 @@ public class UsersController {
     }
 
 
-    @PostMapping(value = "addLocation/{id_user}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public User addUserLocalized(@PathVariable int id_user, @RequestBody Location data) {
-        if(userRepository.findById(id_user).isPresent()){
-            User u = userRepository.findById(id_user).orElse(new User());
-            Location location = new Location(data.getLongitude(),data.getLatitude());
-            User_Localized ul = new User_Localized(u,location);
-            u.addUserLocation(ul);
-            return userRepository.saveAndFlush(u);
-        }
-        return null;
-    }
-
-    @PostMapping("{id_user}/{state_label}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public User addUserState(@PathVariable int id_user, @PathVariable String state_label) {
-        if(userRepository.findById(id_user).isPresent()){
-            User u = userRepository.findById(id_user).orElse(new User());
-            State state = new State(state_label);
-            User_State us = new User_State(u,state);
-            u.addUserState(us);
-            return userRepository.saveAndFlush(u);
-        }
-        return null;
-    }
-
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public User update(@PathVariable Integer id, @RequestBody User user){
         // TODO: Ajouter ici une validation si tous les champs ont ete passes
