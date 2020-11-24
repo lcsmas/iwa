@@ -39,31 +39,31 @@ services:
 #      - db
 #      - keycloak
 
-  #zookeeper:
-  #  container_name: iwa_zookeeper
-  #  #hostname: zoo1
-  #  image: zookeeper
-  #  ports:
-  #    - "2181:2181"
-  #    - "8085:8080"
-  #  environment:
-  #    ZOO_MY_ID: 1
-  #    ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
+  zookeeper:
+    container_name: iwa_zookeeper
+    #hostname: zoo1
+    image: zookeeper
+    ports:
+      - "2181:2181"
+      - "8085:8080"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
 
-  #kafka:
-  #  depends_on:
-  #    - zookeeper
-  #  restart: always
-  #  scale: 3
-  #  build: kafka/
-  #  ports:
-  #    - "9092"
-  #  environment:
-  #    HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
-  #    KAFKA_ZOOKEEPER_CONNECT: iwa_zookeeper:2181
-  #    KAFKA_CREATE_TOPICS: "IWA:1:3"
-  #  volumes:
-  #    - /var/run/docker.sock:/var/run/docker.sock
+  kafka:
+    depends_on:
+      - zookeeper
+    restart: always
+    scale: 3
+    build: kafka/
+    ports:
+      - "9092"
+    environment:
+      HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+      KAFKA_ZOOKEEPER_CONNECT: iwa_zookeeper:2181
+      KAFKA_CREATE_TOPICS: "IWA:1:3"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 #  kafka_manager:
 #    depends_on:

@@ -17,6 +17,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-b' +
 			'oot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.6.2'
 
 	compile group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '11.0.3'
 
