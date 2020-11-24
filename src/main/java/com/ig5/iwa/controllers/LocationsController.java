@@ -1,7 +1,6 @@
 package com.ig5.iwa.controllers;
 
 import com.ig5.iwa.models.Location;
-import com.ig5.iwa.models.User;
 import com.ig5.iwa.models.User_Localized;
 import com.ig5.iwa.repositories.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.GeneratedValue;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -49,4 +47,8 @@ public class LocationsController {
         return locationRepository.saveAndFlush(sendNewLoc);
     }
 
+    @RequestMapping(path= "exists", method = RequestMethod.POST)
+    public Boolean exists(@RequestBody Location location){
+        return locationRepository.findAll().stream().filter(l-> (l.getLongitude() == location.getLongitude()) && (l.getLatitude() == location.getLatitude())).count()>0;
+    }
 }
