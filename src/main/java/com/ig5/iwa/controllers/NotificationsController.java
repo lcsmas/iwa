@@ -2,6 +2,7 @@ package com.ig5.iwa.controllers;
 
 import com.ig5.iwa.models.Notification;
 import com.ig5.iwa.repositories.NotificationRepository;
+import com.ig5.iwa.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,26 +14,26 @@ import java.util.Optional;
 @RestController
 public class NotificationsController {
     @Autowired
-    private NotificationRepository notificationRepository;
+    private NotificationService notificationService;
 
     @GetMapping
     public List<Notification> list() {
-        return notificationRepository.findAll();
+        return notificationService.findAll();
     }
 
     @GetMapping
     @RequestMapping ("{id}")
     public Optional<Notification> get(@PathVariable Integer id) {
-        if(notificationRepository.findById(id).isEmpty()){
+        if(notificationService.noNotificationIdFound(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_notification "+id+" not found");
         }else{
-            return notificationRepository.findById(id);
+            return notificationService.findNotificationById(id);
         }
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Notification create(@RequestBody final Notification notification) {
-        return notificationRepository.saveAndFlush(notification);
+        return notificationService.create(notification);
     }
 }

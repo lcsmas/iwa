@@ -9,6 +9,8 @@ import com.ig5.iwa.models.User;
 import com.ig5.iwa.repositories.NotificationRepository;
 import com.ig5.iwa.repositories.StateRepository;
 import com.ig5.iwa.repositories.UserRepository;
+import com.ig5.iwa.services.LocationService;
+import com.ig5.iwa.services.NotificationService;
 import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -40,7 +43,7 @@ public class HttpRequestNotificationTest {
     private MockMvc mockMvc;
 
     @Mock
-    private NotificationRepository notificationRepository;
+    private NotificationService service;
 
     @InjectMocks
     private NotificationsController notificationsController;
@@ -55,7 +58,7 @@ public class HttpRequestNotificationTest {
     @Test
     @DisplayName("GET /notifications/1 - Not Found")
     public void testGetUnknowNotification() throws Exception {
-        doReturn(Optional.empty()).when(notificationRepository).findById(1);
+        doReturn(Optional.empty()).when(service).findNotificationById(1);
         mockMvc.perform(get("/api/v1/notifications/{id}",1))
                 .andExpect(status().isNotFound());
     }
@@ -70,7 +73,7 @@ public class HttpRequestNotificationTest {
         java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
 
         Notification notification = new Notification(id,"labelNotification",currentTimestamp);
-        when(notificationRepository.findById(id)).thenReturn(java.util.Optional.of(notification));
+        when(service.findNotificationById(id)).thenReturn(java.util.Optional.of(notification));
         mockMvc.perform(delete("/api/v1/notifications/1"))
                 .andExpect(status().isOk());
     }
@@ -78,7 +81,7 @@ public class HttpRequestNotificationTest {
     @Test
     @DisplayName("Delete /notifications/1 - Not Found")
     public void deleteNotificationNotFound() throws Exception {
-        doReturn(Optional.empty()).when(notificationRepository).findById(1);
+        doReturn(Optional.empty()).when(service).findNotificationById(1);
         mockMvc.perform(delete("/api/v1/notifications/1"))
                 .andExpect(status().isNotFound());
     }

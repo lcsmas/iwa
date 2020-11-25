@@ -2,6 +2,7 @@ package com.ig5.iwa.controllers;
 
 import com.ig5.iwa.models.State;
 import com.ig5.iwa.repositories.StateRepository;
+import com.ig5.iwa.services.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,24 +15,24 @@ import java.util.Optional;
 @RestController
 public class StatesController {
     @Autowired
-    private StateRepository stateRepository;
+    private StateService stateService;
 
     @GetMapping
-    public List<State> list() {  return stateRepository.findAll();}
+    public List<State> list() {  return stateService.findAll();}
 
     @GetMapping
     @RequestMapping ("{id}")
     public Optional<State> get(@PathVariable Integer id) {
-        if(stateRepository.findById(id).isEmpty()){
+        if(stateService.noStateIdFound(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_state "+id+" not found");
         }else{
-            return stateRepository.findById(id);
+            return stateService.findStateById(id);
         }
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public State create(@RequestBody final State state) {
-        return stateRepository.saveAndFlush(state);
+        return stateService.create(state);
     }
 }

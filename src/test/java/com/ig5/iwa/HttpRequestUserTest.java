@@ -65,8 +65,8 @@ class HttpRequestUserTest {
     @Test
     @DisplayName("GET /users/1 - Not Found")
     public void testGetUnknowUser() throws Exception {
-    doReturn(Optional.empty()).when(userRepository).findById(1);
-    mockMvc.perform(get("/api/v1/users/{id}",1))
+    doReturn(Optional.empty()).when(userRepository).findById(-1);
+    mockMvc.perform(get("/api/v1/users/{id}",-1))
                 .andExpect(status().isNotFound());
     }
 
