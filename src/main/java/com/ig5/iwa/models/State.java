@@ -30,7 +30,7 @@ public class State {
         this.label_state = label_state;
     }
 
-    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "state")
     private Set<User_State> users;
 
     @OneToMany(mappedBy = "state" , cascade = CascadeType.ALL)

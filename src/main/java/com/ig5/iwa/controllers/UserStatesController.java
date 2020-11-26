@@ -39,10 +39,11 @@ public class UserStatesController {
 
     @PostMapping("{id_user}/{state_label}")
     @ResponseStatus(HttpStatus.CREATED)
-    public User_State addUserState(@PathVariable int id_user, @PathVariable String state_label) {
+    public User addUserState(@PathVariable int id_user, @PathVariable String state_label) {
         if(userStateService.noUserIdFound(id_user)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error : id_user " + id_user + " was not found");
+        }else{
             return userStateService.saveAndFlush(id_user, state_label);
         }
-        return null;
     }
 }

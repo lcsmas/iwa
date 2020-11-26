@@ -35,13 +35,13 @@ public class UserLocalizedController {
         }
     }
 
-    @PostMapping(value = "add/{id_user}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "add/{id_user}/longitude/{longitude}/latitude/{latitude}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public User addUserLocalized(@PathVariable int id_user, @RequestBody Location data) {
+    public User addUserLocalized(@PathVariable int id_user, @PathVariable float longitude, @PathVariable float latitude) {
         if(userLocalizedService.noUserIdFound(id_user)){
-            return userLocalizedService.saveAndFlush(id_user,data);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error : id_user " + id_user + " was not found");
         }
-        return null;
+        return userLocalizedService.saveAndFlush(id_user,longitude,latitude);
     }
 
 }

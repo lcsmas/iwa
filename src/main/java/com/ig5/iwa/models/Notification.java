@@ -19,18 +19,18 @@ public class Notification {
     private Timestamp dateNotification = Timestamp.from(Instant.now());
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_location")
     //@JsonIgnoreProperties("users")
     private Location location;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     //@JsonIgnoreProperties("states")
 
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_state")
     //@JsonIgnoreProperties("users")
     private State state;
@@ -65,6 +65,14 @@ public class Notification {
 
     public void setId_notification(Integer id_notification) {
         this.id_notification = id_notification;
+    }
+
+    public Timestamp getDateNotification() {
+        return dateNotification;
+    }
+
+    public void setDateNotification(Timestamp dateNotification) {
+        this.dateNotification = dateNotification;
     }
 
     public String getLabel_notification() {

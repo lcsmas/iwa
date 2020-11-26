@@ -18,10 +18,10 @@ public class Location {
     private float longitude;
     private float latitude;
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<User_Localized> users;
 
-    @OneToMany(mappedBy="location", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="location", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @NotFound(action = NotFoundAction.EXCEPTION)
     private Set<Notification> notifications;
 
