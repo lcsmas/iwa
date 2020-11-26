@@ -43,12 +43,22 @@ public class UserStateService {
         return userService.noUserIdFound(id);
     }
 
-    public User saveAndFlush(int id_user, String state_label) {
+        public User_State saveAndFlush(int id_user, String state_label) {
+        /*
         User u = userService.findUserById(id_user).orElse(new User());
         State state = new State(state_label);
         State stateSave = stateService.save(state);
         User_State us = new User_State(u,stateSave);
         u.addUserState(us);
         return userService.saveAndFlush(u);
+
+         */
+        User u = userService.findUserById(id_user).orElse(new User());
+        State state = new State(state_label);
+        User_State us = new User_State(u,state);
+        System.out.println("------------------+" + us.getState());
+        System.out.println("------------------+" + us.getUser());
+        u.addUserState(us);
+        return userStateRepository.save(us);
     }
 }

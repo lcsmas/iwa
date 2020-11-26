@@ -1,10 +1,10 @@
 package com.ig5.iwa.controllers;
 
 import com.ig5.iwa.models.Notification;
-import com.ig5.iwa.repositories.NotificationRepository;
 import com.ig5.iwa.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,6 +22,12 @@ public class NotificationsController {
     }
 
     @GetMapping
+    @RequestMapping ("user/{id}")
+    public List<Notification> getByUser(@PathVariable Integer id) {
+            return notificationService.findNotificationsByUserId(id);
+    }
+
+    @GetMapping
     @RequestMapping ("{id}")
     public Optional<Notification> get(@PathVariable Integer id) {
         if(notificationService.noNotificationIdFound(id)){
@@ -31,9 +37,10 @@ public class NotificationsController {
         }
     }
 
-    @PostMapping
+
+    @PostMapping(value = "user/{id_user}/state/{id_state}/location/{id_location}/label/{label_notification}",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Notification create(@RequestBody final Notification notification) {
-        return notificationService.create(notification);
+    public Notification createNotif(@PathVariable Integer id_user, @PathVariable Integer id_state , @PathVariable Integer id_location , @PathVariable String label_notification ) {
+        return notificationService.createNot( id_user, id_state , id_location , label_notification);
     }
 }

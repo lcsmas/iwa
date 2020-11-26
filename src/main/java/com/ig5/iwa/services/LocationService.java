@@ -1,13 +1,10 @@
 package com.ig5.iwa.services;
 
 import com.ig5.iwa.models.Location;
-import com.ig5.iwa.models.User;
 import com.ig5.iwa.models.User_Localized;
 import com.ig5.iwa.repositories.LocationRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +26,10 @@ public class LocationService {
 
     public Optional<Location> findLocationById(Integer id) {
         return locationRepository.findById(id);
+    }
+
+    public Location getLocationById(Integer id) {
+        return locationRepository.getOne(id);
     }
 
     public Boolean existsLocationWithLoc(Location location){

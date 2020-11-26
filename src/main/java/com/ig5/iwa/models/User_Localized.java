@@ -1,6 +1,9 @@
 package com.ig5.iwa.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
@@ -23,6 +26,18 @@ public class User_Localized {
 
     private Date date = Date.from(Instant.now());
 
+    //@JsonBackReference
+    @JsonManagedReference
+    public User getUser() {
+        return user;
+    }
+
+    //@JsonBackReference
+    @JsonManagedReference
+    public Location getLocation() {
+        return location;
+    }
+
     public User_Localized(){}
 
     public User_Localized(User user, Location location) {
@@ -40,17 +55,13 @@ public class User_Localized {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
-    }
+
 
     public void setUser(User user) {
         this.user = user;
     }
 
-    public Location getLocation() {
-        return location;
-    }
+
 
     public void setLocation(Location location) {
         this.location = location;

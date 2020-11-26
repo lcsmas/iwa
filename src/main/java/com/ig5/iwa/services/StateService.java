@@ -27,6 +27,10 @@ public class StateService {
         return stateRepository.findById(id);
     }
 
+    public State getStateById(Integer id) {
+        return stateRepository.getOne(id);
+    }
+
     public State create(State state) {
         return stateRepository.saveAndFlush(state);
     }

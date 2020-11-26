@@ -1,9 +1,6 @@
 package com.ig5.iwa.controllers;
 
 import com.ig5.iwa.models.*;
-import com.ig5.iwa.repositories.StateRepository;
-import com.ig5.iwa.repositories.UserRepository;
-import com.ig5.iwa.repositories.UserStateRepository;
 import com.ig5.iwa.services.UserStateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,7 +39,7 @@ public class UserStatesController {
 
     @PostMapping("{id_user}/{state_label}")
     @ResponseStatus(HttpStatus.CREATED)
-    public User addUserState(@PathVariable int id_user, @PathVariable String state_label) {
+    public User_State addUserState(@PathVariable int id_user, @PathVariable String state_label) {
         if(userStateService.noUserIdFound(id_user)){
             return userStateService.saveAndFlush(id_user, state_label);
         }

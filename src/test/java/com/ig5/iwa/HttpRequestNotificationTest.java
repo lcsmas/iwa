@@ -1,17 +1,8 @@
 package com.ig5.iwa;
 
 import com.ig5.iwa.controllers.NotificationsController;
-import com.ig5.iwa.controllers.StatesController;
-import com.ig5.iwa.controllers.UsersController;
 import com.ig5.iwa.models.Notification;
-import com.ig5.iwa.models.State;
-import com.ig5.iwa.models.User;
-import com.ig5.iwa.repositories.NotificationRepository;
-import com.ig5.iwa.repositories.StateRepository;
-import com.ig5.iwa.repositories.UserRepository;
-import com.ig5.iwa.services.LocationService;
 import com.ig5.iwa.services.NotificationService;
-import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,22 +10,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
+
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest

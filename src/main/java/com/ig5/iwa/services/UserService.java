@@ -28,6 +28,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public User getUserById(Integer id) {
+        return userRepository.getOne(id);
+    }
+
     public Boolean existsMail(String mail){
         return userRepository.findByMail(mail).isEmpty();
     }
