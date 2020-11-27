@@ -38,6 +38,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/api/v1/users/mail/*").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
+                .antMatchers("/api/v1/kafka/emitter").permitAll()
                 .anyRequest().authenticated();
     }
 

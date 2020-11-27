@@ -10,6 +10,6 @@ public class KafkaTopicConfig {
 
     @Bean
     public NewTopic topic1() {
-        return TopicBuilder.name("reflectoring-1").build();
+        return TopicBuilder.name("iwaTopic").build();
     }
 }
