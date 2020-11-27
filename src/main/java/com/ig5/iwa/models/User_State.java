@@ -1,5 +1,7 @@
 package com.ig5.iwa.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
@@ -20,6 +22,18 @@ public class User_State {
     @JoinColumn(name = "id_state")
     private State state;
 
+    //@JsonBackReference
+    @JsonManagedReference
+    public User getUser() {
+        return user;
+    }
+
+    //@JsonBackReference
+    @JsonManagedReference
+    public State getState() {
+        return state;
+    }
+
     private Date date = Date.from(Instant.now());
 
     public User_State(){}
@@ -39,16 +53,8 @@ public class User_State {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public State getState() {
-        return state;
     }
 
     public void setState(State state) {
@@ -62,4 +68,6 @@ public class User_State {
     public void setDate(Date date) {
         this.date = date;
     }
+
+
 }

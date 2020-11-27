@@ -1,6 +1,8 @@
 package com.ig5.iwa.models;
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,9 +11,6 @@ import java.util.UUID;
 @Entity(name="state")
 @Table(name = "state", schema = "public")
 @Access(AccessType.FIELD)
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id_state")
 public class State {
 
     @Id
@@ -31,8 +30,24 @@ public class State {
         this.label_state = label_state;
     }
 
-    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "state")
     private Set<User_State> users;
+
+    @OneToMany(mappedBy = "state" , cascade = CascadeType.ALL)
+    @NotFound(action = NotFoundAction.EXCEPTION)
+    private Set<Notification> notifications;
+
+    //@JsonManagedReference
+    @JsonBackReference
+    public Set<User_State> getUsers() {
+        return users;
+    }
+
+    //@JsonManagedReference
+    @JsonBackReference
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
 
     public Integer getId_state() {
         return id_state;
@@ -50,11 +65,13 @@ public class State {
         this.label_state = label_state;
     }
 
-    public Set<User_State> getUsers() {
-        return users;
-    }
-
     public void setUsers(Set<User_State> users) {
         this.users = users;
     }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+
 }

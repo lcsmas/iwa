@@ -1,9 +1,7 @@
 package com.ig5.iwa.controllers;
 
 import com.ig5.iwa.models.*;
-import com.ig5.iwa.repositories.StateRepository;
-import com.ig5.iwa.repositories.UserRepository;
-import com.ig5.iwa.repositories.UserStateRepository;
+import com.ig5.iwa.services.UserStateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,42 +14,36 @@ import java.util.Optional;
 @RestController
 public class UserStatesController {
     @Autowired
-    public UserStateRepository userStateRepository;
-
-    @Autowired
-    public UserRepository userRepository;
-
-    @Autowired
-    public StateRepository stateRepository;
+    public UserStateService userStateService;
 
     @GetMapping
     public List<User_State> list() {
-        System.out.println("get all users");
-        return userStateRepository.findAll();
+        return userStateService.findAll();
+    }
+
+    @GetMapping
+    @RequestMapping("{id_user}")
+    public List<User_State> listById(@PathVariable int id_user) {
+        return userStateService.listById(id_user);
     }
 
     @GetMapping
     @RequestMapping("{id_user}/currentState")
     public Optional<String> get(@PathVariable int id_user) {
-        if(userStateRepository.findTopById_IdUserOrderByDateDesc(id_user).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error : id_user " + id_user + " was not found");
+        if(userStateService.findOneUserStateWithUserId(id_user)){
+            return Optional.of("sane");
         }else{
-            Optional<String> currentState = userStateRepository.findTopById_IdUserOrderByDateDesc(id_user).map(User_State::getState).map(State::getLabel_state);
-            return currentState;
+            return userStateService.currentState(id_user);
         }
     }
 
     @PostMapping("{id_user}/{state_label}")
     @ResponseStatus(HttpStatus.CREATED)
     public User addUserState(@PathVariable int id_user, @PathVariable String state_label) {
-        if(userRepository.findById(id_user).isPresent()){
-            User u = userRepository.findById(id_user).orElse(new User());
-            State state = new State(state_label);
-            State stateSave = stateRepository.save(state);
-            User_State us = new User_State(u,stateSave);
-            u.addUserState(us);
-            return userRepository.saveAndFlush(u);
+        if(userStateService.noUserIdFound(id_user)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error : id_user " + id_user + " was not found");
+        }else{
+            return userStateService.saveAndFlush(id_user, state_label);
         }
-        return null;
     }
 }

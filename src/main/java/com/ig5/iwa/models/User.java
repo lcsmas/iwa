@@ -1,6 +1,8 @@
 package com.ig5.iwa.models;
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -8,33 +10,55 @@ import java.util.Set;
 @Entity(name="user")
 @Table(name = "user", schema = "public")
 @Access(AccessType.FIELD)
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id_user")
 public class User {
 
     @Id
+    @Column(name = "id_user")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_user;
+    private Integer idUser;
     private String mail;
     private String password;
 
     public User(){}
 
     public User(Integer id_user, String mail, String password) {
-        this.id_user = id_user;
+        this.idUser = id_user;
         this.mail = mail;
         this.password = password;
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public User(String mail, String password) {
+        this.mail = mail;
+        this.password = password;
+    }
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private Set<User_State> states;
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<User_Localized> locations;
 
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    @NotFound(action = NotFoundAction.EXCEPTION)
+    private Set<Notification> notifications;
+
+    //@JsonManagedReference
+    @JsonBackReference
     public Set<User_State> getStates() { return states; }
 
+    //@JsonManagedReference
+    @JsonBackReference
+    public Set<User_Localized> getLocations() {
+        return locations;
+    }
+
+    //@JsonManagedReference
+    @JsonBackReference
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
     public void addUserState(User_State user_state){
         states.add(user_state);
     }
@@ -62,18 +86,28 @@ public class User {
     }
 
     public void setId_user(Integer id) {
-        this.id_user = id;
+        this.idUser = id;
     }
 
     public Integer getId_user() {
-        return id_user;
-    }
-
-    public Set<User_Localized> getLocations() {
-        return locations;
+        return idUser;
     }
 
     public void setLocations(Set<User_Localized> locations) {
         this.locations = locations;
     }
+
+    public Integer getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+
 }

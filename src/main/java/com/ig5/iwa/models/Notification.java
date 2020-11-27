@@ -1,31 +1,59 @@
 package com.ig5.iwa.models;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
+import java.time.Instant;
 
 @Entity(name="notification")
 @Table(name = "notification", schema = "public")
-@Access(AccessType.FIELD)
 public class Notification {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_notification;
-    private String label_notification;
-    private Timestamp date_notification;
 
-    public Notification(Integer id_notification, String label_notification, Timestamp date_notification) {
-        this.id_notification = id_notification;
-        this.label_notification = label_notification;
-        this.date_notification = date_notification;
+    private String label_notification;
+
+    @Column(name = "date_notification")
+    private Timestamp dateNotification = Timestamp.from(Instant.now());
+
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_location")
+    private Location location;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user")
+    private User user;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_state")
+    private State state;
+
+    //@JsonBackReference
+    @JsonManagedReference
+    public Location getLocation() {
+        return location;
     }
 
-    @OneToMany
-    @JoinTable(name="concerned",
-            joinColumns = @JoinColumn(name="id_notification"),
-            inverseJoinColumns = @JoinColumn(name="id_location"))
-    private List<Location> locations;
+    //@JsonBackReference
+    @JsonManagedReference
+    public User getUser() {
+        return user;
+    }
+
+    //@JsonBackReference
+    @JsonManagedReference
+    public State getState() {
+        return state;
+    }
+
+    public Notification(String label_notification) {
+        this.label_notification = label_notification;
+    }
+
+    public Notification(){}
 
     public Integer getId_notification() {
         return id_notification;
@@ -33,6 +61,14 @@ public class Notification {
 
     public void setId_notification(Integer id_notification) {
         this.id_notification = id_notification;
+    }
+
+    public Timestamp getDateNotification() {
+        return dateNotification;
+    }
+
+    public void setDateNotification(Timestamp dateNotification) {
+        this.dateNotification = dateNotification;
     }
 
     public String getLabel_notification() {
@@ -43,19 +79,23 @@ public class Notification {
         this.label_notification = label_notification;
     }
 
-    public List<Location> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
-    }
-
     public Timestamp getDate_notification() {
-        return date_notification;
+        return dateNotification;
     }
 
     public void setDate_notification(Timestamp date_notification) {
-        this.date_notification = date_notification;
+        this.dateNotification = date_notification;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

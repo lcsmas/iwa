@@ -2,7 +2,7 @@ package com.ig5.iwa.controllers;
 
 import com.ig5.iwa.models.Location;
 import com.ig5.iwa.models.User_Localized;
-import com.ig5.iwa.repositories.LocationRepository;
+import com.ig5.iwa.services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,45 +10,38 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RequestMapping("api/v1/locations")
 @RestController
 public class LocationsController {
+
     @Autowired
-    public LocationRepository locationRepository;
+    public LocationService locationService;
 
     @GetMapping
     public List<Location> list() {
         System.out.println("Get all Locations");
-        return locationRepository.findAll();
+        return locationService.findAll();
     }
 
     @GetMapping
     @RequestMapping ("{id}")
     public Optional<Location> get(@PathVariable Integer id) {
-        if(locationRepository.findById(id).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_location "+id+" not found");
+        if(locationService.noLocationIdFound(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_location " + id + " not found");
         }else{
-            return locationRepository.findById(id);
+            return locationService.findLocationById(id);
         }
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Location create(@RequestBody float longitude, float latitude, User_Localized currentUser) {
-        Location sendNewLoc = new Location(longitude,latitude);
-        Set<User_Localized> newList = sendNewLoc.getUsers();
-        newList.add(currentUser);
-        sendNewLoc.setUsers(newList);
-        System.out.println("Post Location:\n-long:"+sendNewLoc.getLongitude()
-                +"\n-lat:"+sendNewLoc.getLatitude()
-                +"\n-users_localized:"+sendNewLoc.getUsers());
-        return locationRepository.saveAndFlush(sendNewLoc);
+        return locationService.create(longitude, latitude, currentUser);
     }
 
     @RequestMapping(path= "exists", method = RequestMethod.POST)
     public Boolean exists(@RequestBody Location location){
-        return locationRepository.findAll().stream().filter(l-> (l.getLongitude() == location.getLongitude()) && (l.getLatitude() == location.getLatitude())).count()>0;
+        return locationService.existsLocationWithLoc(location);
     }
 }
