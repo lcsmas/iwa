@@ -36,7 +36,7 @@ public class User {
     private Set<User_State> states;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<User_Localized> locations;
 
 

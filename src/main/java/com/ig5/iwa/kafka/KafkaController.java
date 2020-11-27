@@ -15,7 +15,7 @@ public class KafkaController {
 
     @Autowired
     private KafkaProducer producer;
-    private final List<SseEmitter> emitters = new ArrayList<>();
+    public final List<SseEmitter> emitters = new ArrayList<>();
 
 
     @PostMapping(value = "/publish/longitude/{longitude}/latitude/{latitude}/userId/{userId}/state/{state}")

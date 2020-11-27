@@ -24,7 +24,7 @@ import java.util.List;
 public class KafKaConsumer {
 
     @Autowired
-    private KafkaController kafkaController;
+    KafkaController kafkaController;
 
     @Autowired
     private NotificationService notificationService;
@@ -41,7 +41,7 @@ public class KafKaConsumer {
     private List<String[]> locationStack = new ArrayList<>();
 
     // Send message to client through Emitter
-    //SseEmitter latestEm = kafkaController.getLatestEmitter();
+    public SseEmitter latestEm = kafkaController.getLatestEmitter();
 
     public KafKaConsumer() {
         this.lastDateMessage = new Date();
@@ -83,16 +83,9 @@ public class KafKaConsumer {
             for(int j=i+1; j<locationStack.size(); j++){
                 String[] location2 = locationStack.get(j);
 
-                System.out.println(currentlocation[0]);
-                System.out.println(currentlocation[1]);
-                System.out.println(currentlocation[2]);
-                System.out.println(currentlocation[3]);
-                System.out.println(currentlocation[4]);
-                System.out.println(location2);
-
                 if(!sameUser(currentlocation,location2) && suspicious(location2) && inPerimeter(currentlocation,location2)){
                     //create Notification an persiste location of current
-                    System.out.println("------------------------- Probleme ----------------------------");
+                    System.out.println("------------------------- Contact avec une personne malade ----------------------------");
 
                     int idCurrentUser = Integer.parseInt(currentlocation[0]);
                     int idUserCovid = Integer.parseInt( location2[0]);
