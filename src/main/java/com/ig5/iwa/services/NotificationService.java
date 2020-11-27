@@ -63,8 +63,8 @@ public class NotificationService {
         return notificationRepository.findById(id);
     }
 
-    public Notification createNot(int id_user, int id_state , int id_location , String label_state) {
-        Notification notification = new Notification(label_state);
+    public Notification createNot(int id_user, int id_state , int id_location , String label_notification) {
+        Notification notification = new Notification(label_notification);
         State state = stateRepository.getOne(id_state);
         System.out.println("#-#-#-#-#-# " +state.getId_state());
         User user = userRepository.getOne(id_user);

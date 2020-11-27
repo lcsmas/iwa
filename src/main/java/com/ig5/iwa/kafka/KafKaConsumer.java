@@ -1,6 +1,10 @@
 package com.ig5.iwa.kafka;
 
 import com.ig5.iwa.models.User;
+import com.ig5.iwa.models.User_Localized;
+import com.ig5.iwa.services.NotificationService;
+import com.ig5.iwa.services.UserLocalizedService;
+import com.ig5.iwa.services.UserStateService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,6 +25,15 @@ public class KafKaConsumer {
 
     @Autowired
     private KafkaController kafkaController;
+
+    @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
+    private UserStateService userStateService;
+
+    @Autowired
+    private UserLocalizedService userLocalizedService;
 
     private static long MAX_DURATION = MILLISECONDS.convert(15, SECONDS);
     private static double MAX_DISTANCE = 500;
@@ -77,17 +90,30 @@ public class KafKaConsumer {
                 System.out.println(currentlocation[4]);
                 System.out.println(location2);
 
-                if(!sameUser(currentlocation,location2) && suspicious(currentlocation,location2) && inPerimeter(currentlocation,location2)){
+                if(!sameUser(currentlocation,location2) && suspicious(location2) && inPerimeter(currentlocation,location2)){
                     //create Notification an persiste location of current
                     System.out.println("------------------------- Probleme ----------------------------");
+
+                    int idState = userStateService.;
+                    int idState;
+                    int idCurrentUser = Integer.parseInt(currentlocation[0]);
+                    int idUserCovid = Integer.parseInt( location2[0]);
+                    float latCovid = Float.parseFloat(location2[2]);
+                    float longCovid = Float.parseFloat(location2[3]);
+                    int idLocationCovid = userLocalizedService.saveAndFlush(idUserCovid,longCovid,latCovid);
+
+                    notificationService.createNot(idCurrentUser,idState,idLocationCovid,"Contact avec une personne malade")
+
                 }
             }
         }
     }
 
-    // compare 2 location
-    public boolean suspicious(String [] currentLocation,String[]location2){
-        boolean res = currentLocation[1].equals("positif") || location2.equals("positif");
+
+
+
+    public boolean suspicious(String[] location2){
+        boolean res = location2[1].equals("covid");
         System.out.println("suspicious:" + res);
         return res;
     }
