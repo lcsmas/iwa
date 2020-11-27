@@ -37,6 +37,9 @@ public class NotificationService {
     public UserRepository userRepository;
 
     @Autowired
+    public UserLocalizedService userLocalizedService;
+
+    @Autowired
     public StateService stateService;
 
     public Boolean noNotificationIdFound(int id){
@@ -80,4 +83,9 @@ public class NotificationService {
     public List<Notification> findNotificationsByUserId(Integer id) {
         return notificationRepository.findAllByUser_IdUserOrderByDateNotificationDesc(id);
     };
+
+    public Notification persistKafkaNotif(int idUserCovid,int idCurrentUser , int idState , float longCovid, float latCovid){
+        int idLocationCovid = userLocalizedService.save(idUserCovid,longCovid,latCovid);
+        return createNot(idCurrentUser,idState,idLocationCovid,"Contact avec une personne malade");
+    }
 }

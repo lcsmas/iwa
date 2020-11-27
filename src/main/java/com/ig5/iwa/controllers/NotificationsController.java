@@ -55,4 +55,11 @@ public class NotificationsController {
             return notificationService.createNot(id_user, id_state, id_location, label_notification);
         }
     }
+/*
+    @PostMapping(value = "/kafka")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Notification persistKafka(){
+        return notificationService.persistKafkaNotif();
+    }
+ */
 }
