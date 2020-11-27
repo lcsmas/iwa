@@ -43,13 +43,14 @@ public class UserLocalizedService {
         return userService.noUserIdFound(id);
     }
 
-    public User saveAndFlush(int id_user, float longitude ,float latitude) {
+    public int saveAndFlush(int id_user, float longitude ,float latitude) {
         User u = userService.findUserById(id_user).orElse(new User());
         Location location = new Location(longitude,latitude);
         Location l = locationService.save(location);
         System.out.println("------------  loc "+l.getId_Location());
         User_Localized ul = new User_Localized(u,l);
         u.addUserLocation(ul);
-        return userService.saveAndFlush(u);
+        userService.saveAndFlush(u);
+        return l.getId_Location();
     }
 }

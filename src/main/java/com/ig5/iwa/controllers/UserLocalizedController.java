@@ -37,7 +37,7 @@ public class UserLocalizedController {
 
     @PostMapping(value = "add/{id_user}/longitude/{longitude}/latitude/{latitude}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public User addUserLocalized(@PathVariable int id_user, @PathVariable float longitude, @PathVariable float latitude) {
+    public int addUserLocalized(@PathVariable int id_user, @PathVariable float longitude, @PathVariable float latitude) {
         if(userLocalizedService.noUserIdFound(id_user)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error : id_user " + id_user + " was not found");
         }
