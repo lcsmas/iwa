@@ -47,6 +47,18 @@ public class NotificationService {
         return notificationRepository.findAll();
     }
 
+    public Boolean noUserIdFound(int id){
+        return userService.noUserIdFound(id);
+    }
+
+    public Boolean noStateIdFound(int id){
+        return stateService.noStateIdFound(id);
+    }
+
+    public Boolean noLocationIdFound(int id){
+        return locationService.noLocationIdFound(id);
+    }
+
     public Optional<Notification> findNotificationById(Integer id) {
         return notificationRepository.findById(id);
     }

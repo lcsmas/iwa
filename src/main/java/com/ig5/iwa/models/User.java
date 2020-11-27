@@ -27,6 +27,11 @@ public class User {
         this.password = password;
     }
 
+    public User(String mail, String password) {
+        this.mail = mail;
+        this.password = password;
+    }
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private Set<User_State> states;
 

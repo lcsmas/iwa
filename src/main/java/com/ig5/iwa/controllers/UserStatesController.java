@@ -31,7 +31,7 @@ public class UserStatesController {
     @RequestMapping("{id_user}/currentState")
     public Optional<String> get(@PathVariable int id_user) {
         if(userStateService.findOneUserStateWithUserId(id_user)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error : id_user " + id_user + " was not found");
+            return Optional.of("sane");
         }else{
             return userStateService.currentState(id_user);
         }

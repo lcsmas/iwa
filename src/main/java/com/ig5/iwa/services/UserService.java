@@ -1,6 +1,7 @@
 package com.ig5.iwa.services;
 
 import com.ig5.iwa.models.User;
+import com.ig5.iwa.models.User_State;
 import com.ig5.iwa.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,4 +59,8 @@ public class UserService {
         return userRepository.saveAndFlush(user);
     }
 
+    public User createWithMail(String mail) {
+        User user = new User(mail,"");
+        return userRepository.saveAndFlush(user);
+    }
 }

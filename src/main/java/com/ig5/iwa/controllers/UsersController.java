@@ -4,6 +4,7 @@ import com.ig5.iwa.models.*;
 import com.ig5.iwa.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -42,9 +43,15 @@ public class UsersController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public User create(@RequestBody final User user) {
         return userService.create(user);
+    }
+
+    @PostMapping(value = "/mail/{mail}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public User createUserWithMail(@PathVariable String mail) {
+        return userService.createWithMail(mail);
     }
 
 

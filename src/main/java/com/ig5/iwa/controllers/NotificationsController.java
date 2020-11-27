@@ -41,6 +41,18 @@ public class NotificationsController {
     @PostMapping(value = "user/{id_user}/state/{id_state}/location/{id_location}/label/{label_notification}",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Notification createNotif(@PathVariable Integer id_user, @PathVariable Integer id_state , @PathVariable Integer id_location , @PathVariable String label_notification ) {
-        return notificationService.createNot( id_user, id_state , id_location , label_notification);
+        if (notificationService.noUserIdFound(id_user)) {
+            System.out.println("1");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_user " + id_user + " not found");
+        } else if (notificationService.noStateIdFound(id_state)) {
+            System.out.println("2");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_state" + id_state + " not found");
+        } else if (notificationService.noLocationIdFound(id_location)) {
+            System.out.println("3");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "id_location " + id_location + " not found");
+        }
+        else{
+            return notificationService.createNot(id_user, id_state, id_location, label_notification);
+        }
     }
 }

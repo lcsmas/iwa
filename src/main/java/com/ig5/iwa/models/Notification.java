@@ -21,18 +21,14 @@ public class Notification {
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_location")
-    //@JsonIgnoreProperties("users")
     private Location location;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
-    //@JsonIgnoreProperties("states")
-
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_state")
-    //@JsonIgnoreProperties("users")
     private State state;
 
     //@JsonBackReference

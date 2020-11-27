@@ -55,13 +55,9 @@ public class User_Localized {
         this.id = id;
     }
 
-
-
     public void setUser(User user) {
         this.user = user;
     }
-
-
 
     public void setLocation(Location location) {
         this.location = location;
