@@ -94,16 +94,13 @@ public class KafKaConsumer {
                     //create Notification an persiste location of current
                     System.out.println("------------------------- Probleme ----------------------------");
 
-                    int idState = userStateService.;
-                    int idState;
                     int idCurrentUser = Integer.parseInt(currentlocation[0]);
                     int idUserCovid = Integer.parseInt( location2[0]);
+                    int idState = userStateService.getIdStateOfUserState(idUserCovid).orElse(-1);
                     float latCovid = Float.parseFloat(location2[2]);
                     float longCovid = Float.parseFloat(location2[3]);
                     int idLocationCovid = userLocalizedService.saveAndFlush(idUserCovid,longCovid,latCovid);
-
-                    notificationService.createNot(idCurrentUser,idState,idLocationCovid,"Contact avec une personne malade")
-
+                    notificationService.createNot(idCurrentUser,idState,idLocationCovid,"Contact avec une personne malade");
                 }
             }
         }
