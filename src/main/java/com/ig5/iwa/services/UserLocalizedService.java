@@ -53,4 +53,15 @@ public class UserLocalizedService {
         userService.saveAndFlush(u);
         return l.getId_Location();
     }
+
+    public int save(int id_user, float longitude ,float latitude) {
+        User u = userService.findUserById(id_user).orElse(new User());
+        Location location = new Location(longitude,latitude);
+        Location l = locationService.save(location);
+        System.out.println("------------  loc "+l.getId_Location());
+        User_Localized ul = new User_Localized(u,l);
+        u.addUserLocation(ul);
+        userService.save(u);
+        return l.getId_Location();
+    }
 }

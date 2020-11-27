@@ -92,7 +92,7 @@ public class KafKaConsumer {
                     int idState = userStateService.getIdStateOfUserState(idUserCovid).orElse(-1);
                     float latCovid = Float.parseFloat(location2[2]);
                     float longCovid = Float.parseFloat(location2[3]);
-                    int idLocationCovid = userLocalizedService.saveAndFlush(idUserCovid,longCovid,latCovid);
+                    int idLocationCovid = userLocalizedService.save(idUserCovid,longCovid,latCovid);
                     notificationService.createNot(idCurrentUser,idState,idLocationCovid,"Contact avec une personne malade");
                 }
             }
